@@ -26,6 +26,6 @@ all: $(FIRMWARES)
 		if [ -f $(basename $<).compare ]; then diff -q $(basename $<).compare $@ ; fi || ( rm $@ ; exit 1 )
 
 clean:
-		rm -f *.o *.elf *.hex
+		rm -f *.o *.elf *.hex *.d
 
 include $(FIRMWARES:.hex=.d)
