@@ -18,7 +18,7 @@
 #include "avr_mcu_section_asm.h"
 
 ; Generate .mmcu section for SimAVR
-AVR_MCU 32000000 atmega88
+AVR_MCU 32000000 atmega328
 AVR_MCU_VOLTAGES 5000 5000 5000
 
 .section .text
@@ -70,7 +70,12 @@ irq_reset:
 
 ; Explicitely set the current address to make the assembler complain if above code
 ; is modified and increases in length.
+#if defined __AVR_ATmega328P__
+.org 0x004,0xff
+#else
 .org 0x002,0xff
+#endif
+
 
 irq_chipselect:
     ; CPU generates INT0 interrupt and starts execution here when the
@@ -142,7 +147,11 @@ no_cs:
 
 ; Explicitely set the current address to make the assembler complain if above code
 ; is modified and increases in length.
+#if defined __AVR_ATmega328P__
+.org 0x038,0x00
+#else
 .org 0x01c,0x00
+#endif
 
 irq_timer0_compa:
     ; The timer 0 compare match A interrupt for every sample. It writes the computed
